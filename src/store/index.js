@@ -1,10 +1,41 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { expenseSlice } from "./expense/expsense-slice";
+import storage from "redux-persist/lib/storage";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 
-const store = configureStore({
-  reducer: {
-    EXPENSE: expenseSlice.reducer,
-  },
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+  whitelist: ["EXPENSE"],
+  // blacklist: []
+};
+
+const rootReducers = combineReducers({
+  EXPENSE: expenseSlice.reducer,
 });
 
-export { store };
+const persistedReducers = persistReducer(persistConfig, rootReducers);
+
+const store = configureStore({
+  reducer: persistedReducers,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
+
+const persistor = persistStore(store);
+
+export { store, persistor };
