@@ -6,10 +6,10 @@ export function ExpenseTotal(props) {
   const income = useSelector((store) => store.EXPENSE.income);
 
   const totalExpenses = expenseList.reduce((acc, currentItem) => {
-    return acc + currentItem.price;
+    return Math.round((acc + currentItem.price) * 100) / 100;
   }, 0);
 
-  const remainingMoney = income - totalExpenses;
+  const remainingMoney = Math.round((income - totalExpenses) * 100) / 100;
 
   return (
     <div>

@@ -2,7 +2,7 @@ import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 import {
   addExpense,
   setIncome,
-  countActionsPerformed,
+  incrementCountActionsPerformed,
 } from "store/expense/expsense-slice";
 
 export const loggerMiddleware = createListenerMiddleware();
@@ -19,7 +19,7 @@ loggerMiddleware.startListening({
   effect: (action, listenerAPI) => {
     //log la dernière action
     console.log(action);
-    listenerAPI.dispatch(countActionsPerformed());
+    listenerAPI.dispatch(incrementCountActionsPerformed());
     //log tout le store
     console.log(listenerAPI.getState());
   },

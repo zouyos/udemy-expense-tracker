@@ -1,8 +1,12 @@
 import { addExpense } from "store/expense/expsense-slice";
 import s from "./style.module.css";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 export function ExpenseInput(props) {
+  const [nameValue, setNameValue] = useState("");
+  const [priceValue, setPriceValue] = useState("");
+
   const dispatch = useDispatch();
 
   function submit(e) {
@@ -10,8 +14,20 @@ export function ExpenseInput(props) {
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name");
     const price = formData.get("price");
-    dispatch(addExpense({ name, price }));
+    if (name.trim() !== "" && price.trim() !== "") {
+      dispatch(addExpense({ name, price }));
+      setNameValue("");
+      setPriceValue("");
+    }
   }
+
+  const handleChangeName = (e) => {
+    setNameValue(e.target.value);
+  };
+
+  const handleChangePrice = (e) => {
+    setPriceValue(e.target.value);
+  };
 
   return (
     <form onSubmit={submit}>
@@ -22,6 +38,8 @@ export function ExpenseInput(props) {
             className="form-control"
             placeholder='Ex : "Apple"'
             name="name"
+            value={nameValue}
+            onChange={handleChangeName}
           />
         </div>
         <div className="col-12 col-sm-2 col-md-4 col-lg-4 mb-2">
@@ -31,6 +49,8 @@ export function ExpenseInput(props) {
             className="form-control"
             placeholder="Ex: 3.99"
             name="price"
+            value={priceValue}
+            onChange={handleChangePrice}
           />
         </div>
 

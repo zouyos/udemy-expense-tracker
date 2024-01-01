@@ -23,6 +23,7 @@ export const expenseSlice = createSlice({
   },
 });
 
-const { addExpense, setIncome, countActionsPerformed } = expenseSlice.actions;
+const { addExpense, setIncome, incrementCountActionsPerformed } =
+  expenseSlice.actions;
 
-export { addExpense, setIncome, countActionsPerformed };
+export { addExpense, setIncome, incrementCountActionsPerformed };
