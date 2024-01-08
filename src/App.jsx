@@ -13,7 +13,7 @@ export function App() {
     <div className={s.main_container}>
       <div className={`row ${s.header}`}>
         <div className={`col-3`}>
-          <Logo title="ISpent" subtitle="track your expenses" />
+          <Logo title="ISpent" subtitle="Track your expenses" />
         </div>
         <div className={`col-9 ${s.income_input}`}>
           <IncomeInput />
